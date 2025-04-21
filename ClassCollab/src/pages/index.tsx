@@ -1,8 +1,7 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import { CheckCircle, Users, Calendar, MessageSquare, ListChecks, BarChart2 } from "lucide-react";
 
 const Index = () => {
