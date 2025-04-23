@@ -1,6 +1,6 @@
 
 import React, { ReactNode } from 'react';
-import Navbar from '../components/Navigation/navbar';
+import Navbar from '../components/Navigation/Navbar';
 
 const DashboardLayout = ({ children }: { children: ReactNode }) => {
   return (
