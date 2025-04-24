@@ -1,11 +1,8 @@
-
 import React, { createContext, useState, useEffect, useContext, ReactNode } from "react";
 
 interface User {
-  id: string;
-  name: string;
+  username: string;
   email: string;
-  avatar?: string;
 }
 
 interface AuthContextType {
@@ -26,66 +23,68 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is already logged in
+    // Load stored auth details on page load
     const storedToken = localStorage.getItem("cc-auth-token");
     const storedUser = localStorage.getItem("cc-user");
-    
+
     if (storedToken && storedUser) {
       setToken(storedToken);
       setUser(JSON.parse(storedUser));
     }
-    
+
     setIsLoading(false);
   }, []);
 
-  // Mock login function (will be replaced with actual API calls later)
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     try {
-      // Mock successful login
-      const mockUser = {
-        id: "user-123",
-        name: "John Doe",
-        email: email,
-        avatar: "",
+      const res = await fetch("http://127.0.0.1:8000/api/accounts/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Invalid email or password");
+      }
+
+      const data = await res.json();
+
+      const userInfo: User = {
+        username: data.user.username,
+        email: data.user.email,
       };
-      const mockToken = "mock-jwt-token";
 
-      // Store in local storage
-      localStorage.setItem("cc-auth-token", mockToken);
-      localStorage.setItem("cc-user", JSON.stringify(mockUser));
+      localStorage.setItem("cc-auth-token", data.access);
+      localStorage.setItem("cc-user", JSON.stringify(userInfo));
 
-      // Update state
-      setUser(mockUser);
-      setToken(mockToken);
+      setToken(data.access);
+      setUser(userInfo);
     } catch (error) {
       console.error("Login failed:", error);
-      throw new Error("Invalid email or password");
+      throw error;
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Mock signup function
   const signup = async (name: string, email: string, password: string) => {
+    // You can replace this with your actual signup logic later
     setIsLoading(true);
     try {
-      // Mock successful signup
-      const mockUser = {
-        id: "user-" + Date.now(),
-        name: name,
-        email: email,
-        avatar: "",
+      const newUser: User = {
+        username: name,
+        email,
       };
       const mockToken = "mock-jwt-token-" + Date.now();
 
-      // Store in local storage
       localStorage.setItem("cc-auth-token", mockToken);
-      localStorage.setItem("cc-user", JSON.stringify(mockUser));
+      localStorage.setItem("cc-user", JSON.stringify(newUser));
 
-      // Update state
-      setUser(mockUser);
       setToken(mockToken);
+      setUser(newUser);
     } catch (error) {
       console.error("Signup failed:", error);
       throw new Error("Failed to create account");

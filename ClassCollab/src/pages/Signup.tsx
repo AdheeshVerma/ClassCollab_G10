@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { toast } from "sonner";
 
 const Signup = () => {
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -19,26 +19,47 @@ const Signup = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!name || !email || !password || !confirmPassword) {
+  
+    if (!username || !email || !password || !confirmPassword) {
       toast.error("Please fill in all fields");
       return;
     }
-    
+  
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
     }
-    
+  
     if (password.length < 6) {
       toast.error("Password must be at least 6 characters long");
       return;
     }
-    
+  
     setIsSubmitting(true);
-    
+  
     try {
-      await signup(name, email, password);
+      const res = await fetch("http://127.0.0.1:8000/api/accounts/register/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          confirm_password: confirmPassword,
+        }),
+      });
+      
+  
+      if (!res.ok) {
+        throw new Error("Signup failed");
+      }
+  
+      const data = await res.json();
+      //localStorage.setItem("accessToken", data.access);
+      //localStorage.setItem("refreshToken", data.refresh);
+  
       toast.success("Account created successfully");
       navigate("/dashboard");
     } catch (error) {
@@ -48,6 +69,7 @@ const Signup = () => {
       setIsSubmitting(false);
     }
   };
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -67,8 +89,8 @@ const Signup = () => {
               <Input
                 id="name"
                 placeholder="John Doe"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>

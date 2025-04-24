@@ -1,11 +1,17 @@
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { toast } from "sonner";
 
 const Login = () => {
@@ -17,20 +23,20 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email || !password) {
       toast.error("Please fill in all fields");
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
-      await login(email, password);
-      toast.success("Logged in successfully");
-      navigate("/dashboard");
+      await login(email, password); // 🌟 real login from AuthContext
+      toast.success("Logged in successfully 🎉");
+      navigate("/dashboard"); // ✅ redirect on success
     } catch (error) {
-      toast.error("Failed to login. Please check your credentials.");
+      toast.error("Failed to login. Please check your credentials 😓");
       console.error(error);
     } finally {
       setIsSubmitting(false);
@@ -42,7 +48,7 @@ const Login = () => {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
-            Welcome back
+            Welcome back 👋
           </CardTitle>
           <CardDescription className="text-center">
             Login to your ClassCollab account
@@ -64,7 +70,10 @@ const Login = () => {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
-                <Link to="/forgot-password" className="text-sm text-cc-blue-600 hover:text-cc-blue-700">
+                <Link
+                  to="/forgot-password"
+                  className="text-sm text-cc-blue-600 hover:text-cc-blue-700"
+                >
                   Forgot password?
                 </Link>
               </div>
@@ -77,21 +86,18 @@ const Login = () => {
                 required
               />
             </div>
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={isSubmitting}
-            >
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
               {isSubmitting ? "Logging in..." : "Sign in"}
             </Button>
           </form>
         </CardContent>
         <CardFooter className="flex flex-col">
           <div className="mt-2 text-center text-sm">
-            <span className="text-cc-gray-500">
-              Don't have an account?{" "}
-            </span>
-            <Link to="/signup" className="font-medium text-cc-blue-600 hover:text-cc-blue-500">
+            <span className="text-cc-gray-500">Don't have an account? </span>
+            <Link
+              to="/signup"
+              className="font-medium text-cc-blue-600 hover:text-cc-blue-500"
+            >
               Sign up
             </Link>
           </div>
