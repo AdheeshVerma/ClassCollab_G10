@@ -74,7 +74,7 @@ const Dashboard = () => {
           <div>
             <h1 className="text-3xl font-bold text-cc-gray-900">Dashboard</h1>
             <p className="text-cc-gray-600 mt-1">
-              Welcome back, {user?.name || "Student"}!
+              Welcome back, {user?.username || "Student"}!
             </p>
           </div>
           
