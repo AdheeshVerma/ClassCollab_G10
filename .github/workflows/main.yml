@@ -1,0 +1,22 @@
+project: classcollab
+description: Setup steps for the ClassCollab group project
+
+setup_steps:
+  - step: Check out the latest code
+    command: |
+      git clone https://github.com/your-username/classcollab.git
+      cd classcollab
+
+  - step: Set up Node.js (v20)
+    instructions: |
+      Ensure Node.js v20 is installed.
+      You can use Node Version Manager (nvm) to install:
+        nvm install 20
+        nvm use 20
+
+  - step: Install all required dependencies
+    command: npm install
+
+notes:
+  - Ensure you are in the project root directory before running any commands.
+  - Contact the team if you face issues with setup or dependencies.
