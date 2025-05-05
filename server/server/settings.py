@@ -25,6 +25,7 @@ SECRET_KEY = 'django-insecure-(5k$&24+oqs7o$ev^c=wt3qysy-rkrf7qw#%mwb%h471ttxabg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+#Add Ngrok link here to make the backed hosted, we wont be doing this curruntly for our evaluation.
 ALLOWED_HOSTS = []
 
 
@@ -87,6 +88,7 @@ WSGI_APPLICATION = 'server.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+#This database would also need to be hosted to make the backend hosted, which would make things complicated.
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -117,9 +119,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
+
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
