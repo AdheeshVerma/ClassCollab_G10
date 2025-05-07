@@ -1,22 +1,45 @@
-project: classcollab
-description: Setup steps for the ClassCollab group project
+# project: classcollab
+# description: Setup steps for the ClassCollab group project
 
-setup_steps:
-  - step: Check out the latest code
-    command: |
-      git clone https://github.com/your-username/classcollab.git
-      cd classcollab
+# setup_steps:
+#   - step: Check out the latest code
+#     command: |
+#       git clone https://github.com/your-username/classcollab.git
+#       cd classcollab
 
-  - step: Set up Node.js (v20)
-    instructions: |
-      Ensure Node.js v20 is installed.
-      You can use Node Version Manager (nvm) to install:
-        nvm install 20
-        nvm use 20
+#   - step: Set up Node.js (v20)
+#     instructions: |
+#       Ensure Node.js v20 is installed.
+#       You can use Node Version Manager (nvm) to install:
+#         nvm install 20
+#         nvm use 20
 
-  - step: Install all required dependencies
-    command: npm install
+#   - step: Install all required dependencies
+#     command: npm install
 
-notes:
-  - Ensure you are in the project root directory before running any commands.
-  - Contact the team if you face issues with setup or dependencies.
+# notes:
+#   - Ensure you are in the project root directory before running any commands.
+#   - Contact the team if you face issues with setup or dependencies.
+
+
+name: Message After Push
+
+on:
+  push:
+    branches:
+      - main  # or whichever branch you want
+
+jobs:
+  push-message-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log message after push
+        run: echo "✅ A file was just pushed to the main branch!"
+      - name: Log message2 after push
+        run: echo "✅ Check The lattest code"
+      - name: Log message3 after push
+        run: echo "✅ Install all requirements"
